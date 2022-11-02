@@ -3,9 +3,10 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently --kill-others \"npm run dev:mock\" \"next dev\"",
     "build": "next build",
     "export": "next export",
+    "start": "next start",
     "dev:mock": "json-server --watch .json-server/db.json --port 3004",
     "tailwind:watch": "tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
     "lint": "next lint"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@types/react": "18.0.24",
     "autoprefixer": "^10.4.13",
+    "concurrently": "^7.5.0",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.1",
     "eslint-config-prettier": "^8.5.0",
