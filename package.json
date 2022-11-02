@@ -5,12 +5,26 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next export"
+    "export": "next export",
+    "dev:mock": "json-server --watch .json-server/db.json --port 3004",
+    "tailwind:watch": "tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
+    "lint": "next lint"
   },
   "dependencies": {
     "cypress": "^10.0.3",
     "next": "^12.1.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.24",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.26.0",
+    "eslint-config-next": "13.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "json-server": "^0.17.0",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
+    "typescript": "4.8.4"
   }
 }
