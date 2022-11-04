@@ -4,10 +4,10 @@ const InvoiceCard = ({invoice}) => {
   const { text, bgColor } = STATUSES[invoice.status];
 
   return (
-    <div key={invoice.id} className={`my-2 px-4 py-2 ${bgColor}`}>
+    <div key={invoice.id} className={`my-2 px-4 py-2 bg-white shadow-md hover:shadow-lg`}>
       <div className="flex flex-row justify-between my-1">
         <div>
-          <div className="text-sm">{text}</div>
+          <div className="text-sm mb-2">{text}</div>
           <div className="font-bold">{invoice.customer.address}</div>
         </div>
         <div>

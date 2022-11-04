@@ -13,6 +13,11 @@ export default function Home() {
     return <div>Error occurred while loading the page.</div>;
   }
 
+  const statuses = {
+    EMAIL_COMPLETED: { friendlyName: "Completed" },
+    EMAIL_IN_PROGRESS: { friendlyName: "In Progress" },
+  };
+
   return (
     <div className="bg-gray-50 w-screen h-screen p-8">
       <div className="flex flex-row">
@@ -22,14 +27,31 @@ export default function Home() {
         </button>
       </div>
 
-      <p className="text-sm mb-6">List of all your recent transactions.</p>
-      <div className="hidden sm:block">
-        <InvoiceTable invoices={invoices} />
-      </div>
+      <p className="text-sm mb-10">List of all your recent transactions.</p>
 
-      <div className="flex flex-col sm:hidden">
-        {invoices && invoices.map((inv) => <InvoiceCard key={inv.id} invoice={inv} />)}
-      </div>
+      {invoices &&
+        Object.keys(statuses).map((status) => {
+          const matchingInvoices = invoices.filter(
+            (inv) => inv.status === status
+          );
+
+          const friendlyName = statuses[status].friendlyName;
+
+          return (
+            <div className="mb-4" key={status}>
+              <p className="text-sm font-semibold mb-1">{friendlyName}</p>
+              <div className="hidden sm:block">
+                <InvoiceTable invoices={matchingInvoices} />
+              </div>
+              <div className="flex flex-col sm:hidden">
+                {matchingInvoices &&
+                  matchingInvoices.map((inv) => (
+                    <InvoiceCard key={inv.id} invoice={inv} />
+                  ))}
+              </div>
+            </div>
+          );
+        })}
     </div>
   );
 }
