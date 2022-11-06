@@ -1,11 +1,14 @@
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  INVOICE_STATUSES,
+} from "../../models";
 
 export const STATUSES = {
-  EMAIL_COMPLETED: {
+  [INVOICE_STATUSES.EmailCompleted.name]: {
     text: "✅ Email Sent",
   },
-  EMAIL_IN_PROGRESS: {
+  [INVOICE_STATUSES.EmailInProgress.name]: {
     text: (
       <>
         <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />

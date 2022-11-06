@@ -1,25 +1,29 @@
-export default function InvoiceTable({invoices}) {
+const classes = {
+  table: "table w-full border-spacing-y-2",
+  headerCell: "text-left text-sm font-semibold text-gray-500",
+  row: "bg-white h-8",
+  cell: "text-left",
+  cellId: "text-left font-semi-bold",
+};
+
+export default function InvoiceTable({ invoices }) {
   return (
-    <table className="table w-full border-spacing-y-2">
+    <table className={classes.table}>
       <thead>
         <tr>
-          <td className="text-left text-sm font-semibold text-gray-500">No.</td>
-          <td className="text-left text-sm font-semibold text-gray-500">
-            Date
-          </td>
-          <td className="text-left text-sm font-semibold text-gray-500">
-            Customer
-          </td>
+          <td className={classes.headerCell}>No.</td>
+          <td className={classes.headerCell}>Date</td>
+          <td className={classes.headerCell}>Customer</td>
         </tr>
       </thead>
       <tbody>
         {invoices &&
           invoices.map((invoice) => {
             return (
-              <tr className="bg-white h-8" key={invoice.id}>
-                <td className="text-left font-semibold">#{invoice.id}</td>
-                <td className="text-left">{invoice.createdDate}</td>
-                <td className="text-left">{invoice.customer.name}</td>
+              <tr className={classes.row} key={invoice.id}>
+                <td className={classes.cellId}>#{invoice.id}</td>
+                <td className={classes.cell}>{invoice.createdDate}</td>
+                <td className={classes.cell}>{invoice.customer.name}</td>
               </tr>
             );
           })}
