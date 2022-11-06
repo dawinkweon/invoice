@@ -1,6 +1,6 @@
 import useInvoices from "hooks/useInvoices";
-import InvoiceCard from "../../components/InvoiceCard";
-import InvoiceTable from "../../components/InvoiceTable.js";
+import InvoiceCard from "components/InvoiceCard";
+import InvoiceTable from "components/InvoiceTable";
 import { INVOICE_STATUSES } from "../../models";
 
 const classes = {
@@ -48,7 +48,7 @@ export default function Home() {
               <div className={classes.invoice.wrapperTable}>
                 <InvoiceTable invoices={matchedInvoices} />
               </div>
-              <div className={classes.invoice.wrapperCards}>
+              <div className={classes.invoice.wrapperCards} data-testid="invoice-card-section">
                 {matchedInvoices &&
                   matchedInvoices.map((inv) => (
                     <InvoiceCard key={inv.id} invoice={inv} />

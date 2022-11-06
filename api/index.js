@@ -1,8 +1,12 @@
 import createApi from "./createApi";
+import urlJoin from "./utils";
+import "isomorphic-fetch";
 
 const host =
   process.env.NODE_ENV == "production" ? "/api" : process.env.NEXT_PUBLIC_HOST;
 
 export const api = {
-  getInvoices: createApi(() => fetch(`${host}/invoices`)),
+  getInvoices: createApi(() => {
+    return fetch(urlJoin(host, "invoices"));
+  }),
 };

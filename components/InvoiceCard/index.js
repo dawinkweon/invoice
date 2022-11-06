@@ -13,7 +13,7 @@ const InvoiceCard = ({ invoice }) => {
   const { text: statusText } = STATUSES[invoice.status];
 
   return (
-    <div key={invoice.id} className={classes.card}>
+    <div key={invoice.id} className={classes.card} data-testid="invoice-card">
       <div className={classes.wrapper}>
         <div>
           <p className={classes.status}>{statusText}</p>
