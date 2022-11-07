@@ -1,15 +1,19 @@
+import { faker } from "@faker-js/faker";
 import { INVOICE_STATUSES } from "../../models";
+import _ from "underscore";
+
+const statuses = Object.values(INVOICE_STATUSES).map((v) => v.name);
 
 export const randomInvoice = () => {
   return {
-    id: Math.random() * 100 + 1,
+    id: faker.random.numeric(2),
     customer: {
-      name: "Earl Construction Ltd.",
-      address: "197 Sunnynook Road",
+      name: faker.company.name(),
+      address: faker.address.streetAddress(),
     },
-    createdDate: "2022-11-02",
-    totalCostNzd: "800",
-    status: "EMAIL_IN_PROGRESS",
+    createdDate: faker.date.recent(10).toLocaleDateString(),
+    totalCostNzd: faker.random.numeric(3),
+    status: _.sample(statuses),
   };
 };
 
@@ -19,7 +23,7 @@ export const getInProgressInvoice = () => {
   return invoice;
 };
 
-export const getCompletedInvoice = () => {
+module.exports.getCompletedInvoice = () => {
   const invoice = randomInvoice();
   invoice.status = INVOICE_STATUSES.EmailCompleted.name;
   return invoice;

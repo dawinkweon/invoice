@@ -5,13 +5,15 @@ import { rest } from "msw";
 import { server } from "../../jest.setup";
 import { getInProgressInvoice, getCompletedInvoice } from "../helpers/fixtures";
 
+const mockGetInvoice = (returnFn) => {
+  server.use(rest.get("http://invoices", returnFn));
+};
+
 describe("Home", () => {
   it("shows loading on load", async () => {
-    server.use(
-      rest.get("http://invoices", (req, res, ctx) => {
-        return res(ctx.delay("infinite"));
-      })
-    );
+    mockGetInvoice((req, res, ctx) => {
+      return res(ctx.delay("infinite"));
+    });
 
     render(<Home />);
     const loading = screen.getByText("Loading...");
@@ -19,11 +21,9 @@ describe("Home", () => {
   });
 
   it("shows headers of invoice status types", async () => {
-    server.use(
-      rest.get("http://invoices", (req, res, ctx) => {
-        return res(ctx.json([]));
-      })
-    );
+    mockGetInvoice((req, res, ctx) => {
+      return res(ctx.json([]));
+    });
 
     render(<Home />);
 
@@ -37,18 +37,16 @@ describe("Home", () => {
   });
 
   it("shows each invoice card when two cards retrieved", async () => {
-    server.use(
-      rest.get("http://invoices", (req, res, ctx) => {
-        const inProgress = getInProgressInvoice();
-        const completed = getCompletedInvoice();
+    mockGetInvoice((req, res, ctx) => {
+      const inProgress = getInProgressInvoice();
+      const completed = getCompletedInvoice();
 
-        return res(ctx.json([inProgress, completed]));
-      })
-    );
+      return res(ctx.json([inProgress, completed]));
+    });
 
     render(<Home />);
 
-    const cards = await screen.findAllByTestId("invoice-card")
+    const cards = await screen.findAllByTestId("invoice-card");
     expect(cards).toHaveLength(2);
   });
 });
