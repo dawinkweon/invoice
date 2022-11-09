@@ -1,9 +1,12 @@
 import useInvoices from "hooks/useInvoices";
-import InvoiceCard from "components/InvoiceCard";
-import InvoiceTable from "components/InvoiceTable";
 import { INVOICE_STATUSES } from "../../models";
+import LoadingIcon from "components/LoadingIcon";
+import _ from "underscore";
+import InvoiceSection from "../InvoiceSection";
 
 const classes = {
+  loadingWrapper: "flex flex-col items-center",
+  loading: "text-sm",
   page: "bg-gray-50 w-screen h-screen p-8",
   header: "flex flex-row",
   title: "text-xl mb-1 font-semibold w-full",
@@ -21,11 +24,7 @@ const classes = {
 export default function Home() {
   const { error, invoices, isLoadingInvoices } = useInvoices();
 
-  if (isLoadingInvoices) {
-    return <div>Loading...</div>;
-  } else if (error) {
-    return <div>Error occurred while loading the page.</div>;
-  }
+  const invoicesByStatus = _.groupBy(invoices, (inv) => inv.status);
 
   return (
     <div className={classes.page}>
@@ -38,25 +37,33 @@ export default function Home() {
         List of all your recent transactions.
       </p>
 
-      {invoices &&
-        Object.values(INVOICE_STATUSES).map((status) => {
-          const matchedInvoices = invoices.filter((inv) => inv.status === status.name);
-
-          return (
-            <section className={classes.invoice.section} key={status.name}>
-              <h1 className={classes.invoice.header}>{status.displayName}</h1>
-              <div className={classes.invoice.wrapperTable}>
-                <InvoiceTable invoices={matchedInvoices} />
-              </div>
-              <div className={classes.invoice.wrapperCards} data-testid="invoice-card-section">
-                {matchedInvoices &&
-                  matchedInvoices.map((inv) => (
-                    <InvoiceCard key={inv.id} invoice={inv} />
-                  ))}
-              </div>
-            </section>
-          );
-        })}
+      {isLoadingInvoices ? (
+        <LoadingSection />
+      ) : error ? (
+        <div>Error occurred.</div>
+      ) : (
+        invoicesByStatus && (
+          <>
+            <InvoiceSection
+              classes={classes}
+              status={INVOICE_STATUSES.EmailInProgress}
+              invoices={invoicesByStatus[INVOICE_STATUSES.EmailInProgress]}
+            />
+            <InvoiceSection
+              classes={classes}
+              status={INVOICE_STATUSES.EmailCompleted}
+              invoices={invoicesByStatus[INVOICE_STATUSES.EmailCompleted]}
+            />
+          </>
+        )
+      )}
     </div>
   );
 }
+
+const LoadingSection = () => (
+  <div className={classes.loadingWrapper}>
+    <LoadingIcon />
+    <span className={classes.loading}>Loading...</span>
+  </div>
+);

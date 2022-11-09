@@ -5,10 +5,10 @@ import {
 } from "../../models";
 
 export const STATUSES = {
-  [INVOICE_STATUSES.EmailCompleted.name]: {
+  [INVOICE_STATUSES.EmailCompleted]: {
     text: "✅ Email Sent",
   },
-  [INVOICE_STATUSES.EmailInProgress.name]: {
+  [INVOICE_STATUSES.EmailInProgress]: {
     text: (
       <>
         <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
