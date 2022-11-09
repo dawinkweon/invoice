@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others \"npm run dev:mock\" \"next dev\"",
-    "build": "next build",
+    "build": "jest --forceExit && next build",
     "export": "next export",
     "start": "next start",
     "dev:mock": "json-server --watch .json-server/db.json --port 3004",

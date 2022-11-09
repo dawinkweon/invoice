@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { INVOICE_STATUSES } from "../../models";
+import { INVOICE_STATUSES } from "models";
 import _ from "underscore";
 
 const statuses = Object.values(INVOICE_STATUSES).map((v) => v.name);
@@ -19,12 +19,12 @@ export const randomInvoice = () => {
 
 export const getInProgressInvoice = () => {
   const invoice = randomInvoice();
-  invoice.status = INVOICE_STATUSES.EmailInProgress.name;
+  invoice.status = INVOICE_STATUSES.EmailInProgress;
   return invoice;
 };
 
-module.exports.getCompletedInvoice = () => {
+export const getCompletedInvoice = () => {
   const invoice = randomInvoice();
-  invoice.status = INVOICE_STATUSES.EmailCompleted.name;
+  invoice.status = INVOICE_STATUSES.EmailCompleted;
   return invoice;
 };

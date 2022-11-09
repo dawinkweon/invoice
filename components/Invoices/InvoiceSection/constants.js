@@ -1,4 +1,4 @@
-import { INVOICE_STATUSES } from "../../models";
+import { INVOICE_STATUSES } from "models";
 
 export const DISPLAY_TEXTS = {
   [INVOICE_STATUSES.EmailCompleted]: "Completed",

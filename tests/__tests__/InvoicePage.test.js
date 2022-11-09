@@ -1,21 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Home from "components/Home";
 import { rest } from "msw";
 import { server } from "../../jest.setup";
 import { getInProgressInvoice, getCompletedInvoice } from "../helpers/fixtures";
+import InvoicePage from "components/pages/InvoicePage";
 
 const mockGetInvoice = (returnFn) => {
   server.use(rest.get("http://invoices", returnFn));
 };
 
-describe("Home", () => {
+describe("InvoicePage", () => {
   it("shows loading on load", async () => {
     mockGetInvoice((req, res, ctx) => {
       return res(ctx.delay("infinite"));
     });
 
-    render(<Home />);
+    render(<InvoicePage />);
     const loading = screen.getByText("Loading...");
     expect(loading).toBeInTheDocument();
   });
@@ -25,7 +25,7 @@ describe("Home", () => {
       return res(ctx.json([]));
     });
 
-    render(<Home />);
+    render(<InvoicePage />);
 
     let text = await screen.findByText("Completed");
     expect(text).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("Home", () => {
       return res(ctx.json([inProgress, completed]));
     });
 
-    render(<Home />);
+    render(<InvoicePage />);
 
     const cards = await screen.findAllByTestId("invoice-card");
     expect(cards).toHaveLength(2);
