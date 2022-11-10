@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 import _ from "underscore";
-import { INVOICE_STATUSES } from "../../src/models";
+import { INVOICE_STATUSES } from "@/models";
 
-const statuses = Object.values(INVOICE_STATUSES).map((v) => v.name);
+const statuses = Object.values(INVOICE_STATUSES);
 
 export const randomInvoice = () => {
   return {
