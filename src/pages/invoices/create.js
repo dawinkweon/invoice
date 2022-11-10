@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Page from "../../components/common/Page";
-import classes from "../../styles";
+import Page from "@/components/common/Page";
+import classes from "@/styles";
 
 export default function CreateInvoice() {
   return (

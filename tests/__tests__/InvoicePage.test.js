@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { rest } from "msw";
 import { server } from "../../jest.setup";
 import { getInProgressInvoice, getCompletedInvoice } from "../helpers/fixtures";
-import InvoicePage from "components/pages/InvoicePage";
+import InvoicePage from "../../src/components/pages/InvoicePage";
 
 const mockGetInvoice = (returnFn) => {
   server.use(rest.get("http://invoices", returnFn));

@@ -10,7 +10,7 @@
     "dev:mock": "json-server --watch .json-server/db.json --port 3004",
     "tailwind:watch": "tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
     "lint": "next lint --dir .",
-    "test": "jest --watch"
+    "test": "jest --modulePaths=src --watch"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

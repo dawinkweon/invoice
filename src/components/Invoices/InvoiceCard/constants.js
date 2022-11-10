@@ -1,6 +1,6 @@
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { INVOICE_STATUSES } from "models";
+import { INVOICE_STATUSES } from "@/models/";
 
 export const STATUSES = {
   [INVOICE_STATUSES.EmailCompleted]: {

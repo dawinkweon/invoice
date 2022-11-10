@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { INVOICE_STATUSES } from "models";
 import _ from "underscore";
+import { INVOICE_STATUSES } from "../../src/models";
 
 const statuses = Object.values(INVOICE_STATUSES).map((v) => v.name);
 

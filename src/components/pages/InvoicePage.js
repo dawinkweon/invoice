@@ -1,11 +1,11 @@
 import Link from "next/link";
-import useInvoices from "hooks/useInvoices";
-import LoadingIcon from "components/LoadingIcon";
+import useInvoices from "@/hooks/useInvoices";
+import LoadingIcon from "@/components/LoadingIcon";
 import _ from "underscore";
-import InvoiceSection from "../Invoices/InvoiceSection";
-import { INVOICE_STATUSES } from "models";
-import { default as cls } from "../../styles";
-import Page from "../common/Page";
+import InvoiceSection from "@/components/Invoices/InvoiceSection";
+import { INVOICE_STATUSES } from "@/models/";
+import { default as cls } from "@/styles";
+import Page from "@/components/common/Page";
 
 const classes = {
   loadingWrapper: "flex flex-col items-center",
