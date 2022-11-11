@@ -1,4 +1,6 @@
-import { STATUSES } from "./constants";
+import { INVOICE_STATUSES } from "@/models/";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const classes = {
   card: "my-2 px-4 py-2 bg-white shadow-md hover:shadow-lg",
@@ -10,7 +12,17 @@ const classes = {
 };
 
 const InvoiceCard = ({ invoice }) => {
-  const { text: statusText } = STATUSES[invoice.status];
+  const STATUSES = {
+    [INVOICE_STATUSES.EmailCompleted]: "✅ Email Sent",
+    [INVOICE_STATUSES.EmailInProgress]: (
+      <>
+        <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+        Sending Email
+      </>
+    ),
+  };
+
+  const statusText = STATUSES[invoice.status];
 
   return (
     <div key={invoice.id} className={classes.card} data-testid="invoice-card">

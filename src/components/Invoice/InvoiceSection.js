@@ -1,5 +1,5 @@
-import InvoiceCard from "../InvoiceCard";
-import { DISPLAY_TEXTS } from "./constants";
+import InvoiceCard from "@/components/Invoice/InvoiceCard";
+import { INVOICE_STATUSES } from "@/models/";
 
 const classes = {
   section: "mb-4",
@@ -9,15 +9,17 @@ const classes = {
 };
 
 export default function InvoiceSection({ invoices, status }) {
-  const statusText = DISPLAY_TEXTS[status];
+  const STATUSES = {
+    [INVOICE_STATUSES.EmailCompleted]: "Completed",
+    [INVOICE_STATUSES.EmailInProgress]: "In Progress",
+  };
+
+  const statusText = STATUSES[status];
 
   return (
     <section className={classes.section} key={status}>
       <h1 className={classes.header}>{statusText}</h1>
-      <div
-        className={classes.wrapperCards}
-        data-testid="invoice-card-section"
-      >
+      <div className={classes.wrapperCards} data-testid="invoice-card-section">
         {invoices &&
           invoices.map((inv) => <InvoiceCard key={inv.id} invoice={inv} />)}
       </div>

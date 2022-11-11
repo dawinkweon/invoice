@@ -1,5 +1,3 @@
-import InvoicePage from "@/components/pages/InvoicePage";
+import InvoicePage from "@/pages/invoices/invoicePage";
 
-export default function _Invoices() {
-  return <InvoicePage />;
-}
+export default InvoicePage;

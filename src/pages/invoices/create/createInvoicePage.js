@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Page from "@/components/common/Page";
+import Page from "@/components/ITheme/Page";
 import classes from "@/styles";
 
-export default function CreateInvoice() {
+export default function CreateInvoicePage() {
   return (
     <Page>
       <Link href="/invoices">
