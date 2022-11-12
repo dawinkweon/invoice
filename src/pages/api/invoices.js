@@ -1,4 +1,4 @@
-import { randomInvoice } from "@/pages/invoices/tests/helpers/fixtures";
+import { randomInvoice } from "@/pages/invoices/tests/fixtures";
 import _ from "underscore";
 
 export default function handler(req, res) {
