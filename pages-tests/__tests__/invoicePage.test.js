@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { rest } from "msw";
-import { server } from "../../../../../jest.setup";
+import { server } from "../../jest.setup";
 import { getInProgressInvoice, getCompletedInvoice } from "../fixtures";
-import InvoicePage from "../../invoicePage";
+import InvoicePage from "../../src/pages/invoices/invoicePage";
 
 const mockGetInvoice = (returnFn) => {
   server.use(rest.get("http://invoices", returnFn));
