@@ -72,6 +72,19 @@ export default function CreateInvoicePage() {
       <Header className={classes.header}>New Invoice</Header>
       <form className={classes.form}>
         <div className="mb-4">
+          <label className={classes.label} htmlFor="Email">
+            📧 Email
+          </label>
+          <InvoiceFormInput
+            name="email"
+            type="email"
+            invoice={newInvoice}
+            placeholder="Email"
+            onChange={onChange}
+          ></InvoiceFormInput>
+          <TagLine>Example: person@gmail.com</TagLine>
+        </div>
+        <div className="mb-4">
           <label className={classes.label} htmlFor="address">
             🏠 Address
           </label>
@@ -85,32 +98,6 @@ export default function CreateInvoicePage() {
           <TagLine>Example: 156 Hillcrest Avenue, Hillcrest</TagLine>
         </div>
         <div className="mb-4">
-          <label className={classes.label} htmlFor="cost">
-            💲Cost
-          </label>
-          <InvoiceFormInput
-            name="cost"
-            type="number"
-            invoice={newInvoice}
-            placeholder="Cost"
-            onChange={onChange}
-          ></InvoiceFormInput>
-          <TagLine>Example: 250.00</TagLine>
-          <div className="mb-4">
-            <label className={classes.label} htmlFor="Email">
-              📧 Email
-            </label>
-            <InvoiceFormInput
-              name="email"
-              type="email"
-              invoice={newInvoice}
-              placeholder="Email"
-              onChange={onChange}
-            ></InvoiceFormInput>
-            <TagLine>Example: person@gmail.com</TagLine>
-          </div>
-        </div>
-        <div className="mb-4">
           <label className={classes.label} htmlFor="name">
             🧍Name <span>(Optional)</span>
           </label>
@@ -122,6 +109,19 @@ export default function CreateInvoicePage() {
             onChange={onChange}
           ></InvoiceFormInput>
           <TagLine>Example: Alex Smith or Contoso Ltd.</TagLine>
+        </div>
+        <div className="mb-4">
+          <label className={classes.label} htmlFor="cost">
+            💲Cost
+          </label>
+          <InvoiceFormInput
+            name="cost"
+            type="number"
+            invoice={newInvoice}
+            placeholder="Cost"
+            onChange={onChange}
+          ></InvoiceFormInput>
+          <TagLine>Example: 250.00</TagLine>
         </div>
         <div className={classes.wrapperOkButton}>
           <OkButton className={classes.okButton} onClick={onOk}>
