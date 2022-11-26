@@ -4,16 +4,14 @@ import LoadingIcon from "@/components/ITheme/LoadingIcon";
 import _ from "underscore";
 import InvoiceSection from "@/components/Invoice/InvoiceSection";
 import { INVOICE_STATUSES } from "@/models/";
-import { default as cls } from "@/styles";
 import Page from "@/components/ITheme/Page";
 import Header from "@/components/ITheme/Header";
+import OkButton from "@/components/ITheme/OkButton";
 
 const classes = {
   loadingWrapper: "flex flex-col items-center",
   loading: "text-sm",
   header: "flex flex-row",
-  addButton:
-    "rounded bg-blue-700 self-end w-36 h-8 sm:h-10 text-white text-xs uppercase",
   description: "text-sm mb-10",
 };
 
@@ -27,7 +25,7 @@ export default function InvoicePage() {
       <section className={classes.header}>
         <Header className="mb-2">Invoices</Header>
         <Link href="/invoices/create">
-          <button className={cls.button}>Add Invoice</button>
+          <OkButton>Create Invoice</OkButton>
         </Link>
       </section>
 
