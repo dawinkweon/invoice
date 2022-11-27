@@ -1,4 +1,4 @@
-import createApi, { ApiResponse } from "./createApi";
+import createApi from "./createApi";
 import urlJoin from "./utils";
 import "isomorphic-fetch";
 import { Invoice } from "@/models";

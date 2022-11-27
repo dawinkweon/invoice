@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
 import _ from "underscore";
-import { INVOICE_STATUSES } from "@/models";
+import { INVOICE_STATUSES, Invoice } from "@/models";
 
 const statuses = Object.values(INVOICE_STATUSES);
 
-export const randomInvoice = () => {
+export function randomInvoice(): Invoice {
   return {
     id: faker.random.numeric(2),
     customer: {
@@ -12,10 +12,10 @@ export const randomInvoice = () => {
       address: faker.address.streetAddress(),
     },
     createdDate: faker.date.recent(10).toLocaleDateString(),
-    totalCostNzd: faker.random.numeric(3),
+    totalCostNzd: parseInt(faker.random.numeric(3)),
     status: _.sample(statuses),
   };
-};
+}
 
 export const getInProgressInvoice = () => {
   const invoice = randomInvoice();

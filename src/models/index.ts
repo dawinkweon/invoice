@@ -4,6 +4,7 @@ export const INVOICE_STATUSES = Object.freeze({
 });
 
 export type Invoice = {
+  id?: undefined | string | number;
   customer: {
     name: string;
     address: string;

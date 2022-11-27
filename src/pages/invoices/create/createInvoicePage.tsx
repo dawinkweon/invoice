@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Header from "@/components/ITheme/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@/components/ITheme/Button";
 import { INVOICE_STATUSES } from "@/models";
 import React from "react";
@@ -8,7 +8,6 @@ import Page from "@/components/ITheme/Page";
 import { api } from "@/api";
 import { useRouter } from "next/router";
 import { InvoicesPath } from "..";
-import { values } from "cypress/types/lodash";
 
 const classes = {
   header: "mb-6",
@@ -45,7 +44,7 @@ const validations = {
   address: (value: string) => value.length > 0,
   cost: (value: number) => value > 0,
   email: (value: string) => value.length > 0 && value.includes("@"),
-  name: (_: string) => true,
+  name: () => true,
 };
 
 const initialState = {
@@ -82,7 +81,7 @@ export default function CreateInvoicePage() {
       status: INVOICE_STATUSES.EmailInProgress,
     };
     console.debug("Creating invoice: " + JSON.stringify(invoice));
-    const { err, response } = await api.createInvoice(invoice);
+    const { err } = await api.createInvoice(invoice);
     if (err) {
       alert("Error occurred.");
     } else {
