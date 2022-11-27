@@ -1,3 +1,5 @@
+import React from "react";
+
 const classes = {
   table: "table w-full border-spacing-y-2",
   headerCell: "text-left text-sm font-semibold text-gray-500",

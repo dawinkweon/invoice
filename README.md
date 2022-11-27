@@ -10,3 +10,7 @@ Install packages and run development server.
 npm install \
 && npm run dev
 ```
+
+## System architecture
+
+![system](./docs/system.svg)

@@ -1,5 +1,6 @@
 import InvoiceCard from "@/components/Invoice/InvoiceCard";
 import { INVOICE_STATUSES } from "@/models/";
+import React from "react";
 
 const classes = {
   section: "mb-4",

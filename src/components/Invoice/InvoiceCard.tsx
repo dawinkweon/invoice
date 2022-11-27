@@ -1,6 +1,7 @@
 import { INVOICE_STATUSES } from "@/models/";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 const classes = {
   card: "my-2 px-4 py-2 bg-white shadow-md hover:shadow-lg",

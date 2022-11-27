@@ -1,8 +1,14 @@
 import Link from "next/link";
-import Page from "@/components/ITheme/Page";
 import Header from "@/components/ITheme/Header";
 import { useEffect, useState } from "react";
-import OkButton from "@/components/ITheme/OkButton";
+import Button from "@/components/ITheme/Button";
+import { INVOICE_STATUSES } from "@/models";
+import React from "react";
+import Page from "@/components/ITheme/Page";
+import { api } from "@/api";
+import { useRouter } from "next/router";
+import { InvoicesPath } from "..";
+import { values } from "cypress/types/lodash";
 
 const classes = {
   header: "mb-6",
@@ -12,24 +18,17 @@ const classes = {
   tagLine: "text-xs mb-4",
   form: "bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4",
   cancel:
-    "inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800",
-  okButton: "w-auto px-4",
-  wrapperOkButton: "flex items-center justify-between",
+    "font-bold text-sm text-blue-500 hover:text-blue-800 bg-white border border-blue-700",
+  okButton: "w-auto bg-blue-700 text-white",
+  wrapperOkCancel: "flex items-center justify-between",
 };
 
-const InvoiceFormInput = ({
-  className,
-  name,
-  type,
-  invoice,
-  placeholder,
-  onChange,
-}) => {
+const InvoiceFormInput = ({ name, type, invoice, placeholder, onChange }) => {
   return (
     <input
       name={name}
       id={name}
-      className={`${classes.input} ${className}`}
+      className={`${classes.input}`}
       type={type}
       placeholder={placeholder}
       onChange={onChange}
@@ -42,6 +41,13 @@ const TagLine = ({ children }) => {
   return <div className={classes.tagLine}>{children}</div>;
 };
 
+const validations = {
+  address: (value: string) => value.length > 0,
+  cost: (value: number) => value > 0,
+  email: (value: string) => value.length > 0 && value.includes("@"),
+  name: (_: string) => true,
+};
+
 const initialState = {
   address: "",
   cost: 0,
@@ -50,11 +56,8 @@ const initialState = {
 };
 
 export default function CreateInvoicePage() {
+  const router = useRouter();
   const [newInvoice, setNewInvoice] = useState(initialState);
-
-  useEffect(() => {
-    console.log(JSON.stringify(newInvoice));
-  }, [newInvoice]);
 
   const onChange = (event) => {
     setNewInvoice({
@@ -63,8 +66,28 @@ export default function CreateInvoicePage() {
     });
   };
 
-  const onOk = () => {
-    alert("OK clicked." + JSON.stringify(newInvoice));
+  const onOk = async () => {
+    if (!validate(newInvoice)) {
+      alert("Invalid invoice");
+      return;
+    }
+
+    const invoice = {
+      customer: {
+        name: newInvoice.name,
+        address: newInvoice.address,
+      },
+      createdDate: "2022-11-02",
+      totalCostNzd: newInvoice.cost,
+      status: INVOICE_STATUSES.EmailInProgress,
+    };
+    console.debug("Creating invoice: " + JSON.stringify(invoice));
+    const { err, response } = await api.createInvoice(invoice);
+    if (err) {
+      alert("Error occurred.");
+    } else {
+      router.push(InvoicesPath);
+    }
   };
 
   return (
@@ -123,17 +146,32 @@ export default function CreateInvoicePage() {
           ></InvoiceFormInput>
           <TagLine>Example: 250.00</TagLine>
         </div>
-        <div className={classes.wrapperOkButton}>
-          <OkButton className={classes.okButton} onClick={onOk}>
+        <div className={classes.wrapperOkCancel}>
+          <Button className={classes.okButton} onClick={onOk}>
             Create
-          </OkButton>
+          </Button>
           <Link href="/invoices">
-            <a className={classes.cancel} href="#">
+            <Button className={classes.cancel} href="#">
               Cancel
-            </a>
+            </Button>
           </Link>
         </div>
       </form>
     </Page>
   );
+}
+function validate(invoice) {
+  const hasErrors =
+    Object.keys(invoice).filter((name) => {
+      const value = invoice[name];
+      const validator = validations[name];
+      const isValid = validator(value);
+      if (!isValid) {
+        console.debug(`Invalid input: ${name} : ${value}`);
+        return true;
+      }
+      return false;
+    }).length > 0;
+
+  return !hasErrors;
 }

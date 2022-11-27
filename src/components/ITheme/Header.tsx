@@ -1,3 +1,5 @@
+import React from "react";
+
 const classes = {
   title: "text-xl mb-1 font-semibold w-full",
 };

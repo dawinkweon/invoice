@@ -18,6 +18,9 @@ const customJestConfig = {
   moduleDirectories: ["node_modules", "<rootDir>/"],
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["./jest.setup.js"],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

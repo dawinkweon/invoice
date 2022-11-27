@@ -1,0 +1,15 @@
+name: Terraform Deploy CI
+
+on:
+  push:
+    branches: [main, test-deploy]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2

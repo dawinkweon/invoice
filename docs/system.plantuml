@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Boundary(invoice, "Invoice System") {
+    Container(nextjsApp, "Invoice App", "Next JS")
+    ContainerDb(db, "Invoice Database")
+}
+
+System_Ext(invoiceService, "Invoice Service", "ExpressJS")
+System_Ext(emailServer, "Email Server", "Gmail SMTP")
+
+Person(user, "User")
+
+Rel(user, nextjsApp, "Creates invoices and views status using", "REST")
+BiRel(nextjsApp, db, "Queues and retrieves invoice requests using", "Dynamo SDK")
+
+Rel(nextjsApp, invoiceService, "Creates and sends invoice using", "REST")
+
+Rel(invoiceService, emailServer, "Sends invoice email using", "SMTP")
+
+@enduml

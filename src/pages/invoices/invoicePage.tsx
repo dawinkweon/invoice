@@ -6,13 +6,15 @@ import InvoiceSection from "@/components/Invoice/InvoiceSection";
 import { INVOICE_STATUSES } from "@/models/";
 import Page from "@/components/ITheme/Page";
 import Header from "@/components/ITheme/Header";
-import OkButton from "@/components/ITheme/OkButton";
+import Button from "@/components/ITheme/Button";
+import React from "react";
 
 const classes = {
   loadingWrapper: "flex flex-col items-center",
   loading: "text-sm",
   header: "flex flex-row",
   description: "text-sm mb-10",
+  createButton: "bg-blue-700 text-white",
 };
 
 export default function InvoicePage() {
@@ -25,7 +27,7 @@ export default function InvoicePage() {
       <section className={classes.header}>
         <Header className="mb-2">Invoices</Header>
         <Link href="/invoices/create">
-          <OkButton>Create Invoice</OkButton>
+          <Button className={classes.createButton}>Create Invoice</Button>
         </Link>
       </section>
 
