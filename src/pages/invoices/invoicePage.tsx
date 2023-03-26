@@ -50,6 +50,10 @@ export default function InvoicePage() {
               status={INVOICE_STATUSES.EmailCompleted}
               invoices={invoicesByStatus[INVOICE_STATUSES.EmailCompleted]}
             />
+            <InvoiceSection
+              status={INVOICE_STATUSES.Error}
+              invoices={invoicesByStatus[INVOICE_STATUSES.Error]}
+            />
           </>
         )
       )}

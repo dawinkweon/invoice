@@ -21,6 +21,7 @@ const InvoiceCard = ({ invoice }) => {
         Sending Email
       </>
     ),
+    [INVOICE_STATUSES.Error]: "❌ Failed",
   };
 
   const statusText = STATUSES[invoice.status];
