@@ -13,6 +13,7 @@ export default function InvoiceSection({ invoices, status }) {
   const STATUSES = {
     [INVOICE_STATUSES.EmailCompleted]: "Completed",
     [INVOICE_STATUSES.EmailInProgress]: "In Progress",
+    [INVOICE_STATUSES.Error]: "Error",
   };
 
   const statusText = STATUSES[status];

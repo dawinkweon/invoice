@@ -8,6 +8,7 @@ import Page from "@/components/ITheme/Page";
 import { api } from "@/api";
 import { useRouter } from "next/router";
 import { InvoicesPath } from "..";
+import { CreateInvoiceRequest, Type } from "@/models/Invoice";
 
 const classes = {
   header: "mb-6",
@@ -48,15 +49,31 @@ const validations = {
 };
 
 const initialState = {
-  address: "",
-  cost: 0,
   email: "",
+  address: "",
   name: "",
+  cost: 0,
+  isIncludeGst: false,
+  serviceDesc: "",
+  emailSubject: "",
+  emailBody: "",
+  type: "",
 };
+
+const DEFAULT_SERVICE_DESC = `Cutting Trees`;
+const DEFAULT_EMAIL_SUBJECT = `Invoice - Young's Garden Services Ltd.`;
+const DEFAULT_EMAIL_BODY = `Hello,
+
+Please find the enclosed invoice.
+Thank you for doing business with us.
+
+Regards,
+Young`;
 
 export default function CreateInvoicePage() {
   const router = useRouter();
   const [newInvoice, setNewInvoice] = useState(initialState);
+  const [isBusy, setIsBusy] = useState(false);
 
   const onChange = (event) => {
     setNewInvoice({
@@ -71,17 +88,28 @@ export default function CreateInvoicePage() {
       return;
     }
 
-    const invoice = {
+    const invoice: CreateInvoiceRequest = {
+      id: null,
+      email: newInvoice.email,
       customer: {
         name: newInvoice.name,
         address: newInvoice.address,
       },
-      createdDate: "2022-11-02",
-      totalCostNzd: newInvoice.cost,
+      createdDate: null,
+      totalCostNzd: newInvoice.cost.toString(),
       status: INVOICE_STATUSES.EmailInProgress,
+      type: Type.INVOICE,
+      isIncludeGst: false,
+      serviceDesc: DEFAULT_SERVICE_DESC,
+      emailSubject: DEFAULT_EMAIL_SUBJECT,
+      emailBody: DEFAULT_EMAIL_BODY,
     };
+
     console.debug("Creating invoice: " + JSON.stringify(invoice));
+    setIsBusy(true);
+
     const { err } = await api.createInvoice(invoice);
+    setIsBusy(false);
     if (err) {
       alert("Error occurred.");
     } else {
@@ -146,9 +174,10 @@ export default function CreateInvoicePage() {
           <TagLine>Example: 250.00</TagLine>
         </div>
         <div className={classes.wrapperOkCancel}>
-          <Button className={classes.okButton} onClick={onOk}>
+          <Button className={classes.okButton} onClick={onOk} disabled={isBusy}>
             Create
           </Button>
+
           <Link href="/invoices">
             <Button className={classes.cancel} href="#">
               Cancel
@@ -159,18 +188,30 @@ export default function CreateInvoicePage() {
     </Page>
   );
 }
+
+const hasValidation = (name: string): Boolean => {
+  if (!(name in validations)) {
+    console.warn(`Skipping validation as it is missing for name: ${name}`);
+    return false;
+  } else {
+    return true;
+  }
+};
+
 function validate(invoice) {
   const hasErrors =
-    Object.keys(invoice).filter((name) => {
-      const value = invoice[name];
-      const validator = validations[name];
-      const isValid = validator(value);
-      if (!isValid) {
-        console.debug(`Invalid input: ${name} : ${value}`);
-        return true;
-      }
-      return false;
-    }).length > 0;
+    Object.keys(invoice)
+      .filter(hasValidation)
+      .filter((name) => {
+        const value = invoice[name];
+        const validator = validations[name];
+        const isValid = validator(value);
+        if (!isValid) {
+          console.debug(`Invalid input: ${name} : ${value}`);
+          return true;
+        }
+        return false;
+      }).length > 0;
 
   return !hasErrors;
 }
