@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others \"npm run dev:mock\" \"next dev\"",
+    "start:mock": "concurrently --kill-others \"npm run dev:mock\" \"next dev\"",
+    "start:dev": "export NODE_ENV=dev && next dev",
+    "start:test": "export NODE_ENV=test && next dev",
+    "start:prod": "next build && next start",
     "build": "jest --forceExit && next build",
     "export": "next export",
     "start": "next start",
