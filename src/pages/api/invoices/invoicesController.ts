@@ -38,7 +38,7 @@ const storeRequest = (request: CreateInvoiceRequest): CreateInvoiceRequest => {
     ...request,
     status: INVOICE_STATUSES.EmailInProgress,
   };
-  invoices.push(request);
+  invoices.push(savedRequest);
   return savedRequest;
 };
 
