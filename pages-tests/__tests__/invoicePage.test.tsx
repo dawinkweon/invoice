@@ -35,6 +35,10 @@ describe("InvoicePage", () => {
     text = await screen.findByText("In Progress");
     expect(text).toBeInTheDocument();
     expect(text).toBeInstanceOf(HTMLHeadingElement);
+
+    text = await screen.findByText("Error");
+    expect(text).toBeInTheDocument();
+    expect(text).toBeInstanceOf(HTMLHeadingElement);
   });
 
   it("shows each invoice card when two cards retrieved", async () => {
